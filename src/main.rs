@@ -166,7 +166,7 @@ fn main() -> std::io::Result<()> {
         }
     };
 
-    let mut output = grid.to_string();
+    let output = grid.to_string();
     println!("{}", format!("{}", output));
 
     Ok(())
