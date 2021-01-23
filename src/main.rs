@@ -3,10 +3,7 @@
 extern crate structopt;
 
 use bincode;
-use std::ffi::OsStr;
 use std::fs::File;
-use std::io::{BufWriter, Write};
-use std::path::Path;
 use structopt::clap::{arg_enum, AppSettings};
 use structopt::StructOpt;
 
@@ -169,30 +166,8 @@ fn main() -> std::io::Result<()> {
         }
     };
 
-    let filepath = Path::new(&opt.output);
-
-    match filepath.extension().and_then(OsStr::to_str) {
-        Some("png") => {
-            let image = grid.to_image(
-                opt.cell_size,
-                opt.wall_size,
-                opt.background_color,
-                opt.wall_color,
-            );
-            image.save(opt.output)?;
-        }
-        Some("mz") => {
-            let encoded = bincode::serialize(&grid).unwrap();
-            let file = File::create(filepath)?;
-            let mut file_writer = BufWriter::new(file);
-            file_writer.write_all(&encoded)?;
-        }
-        _ => {
-            let file = File::create(filepath)?;
-            let mut file_writer = BufWriter::new(file);
-            file_writer.write_all(format!("{}", grid).as_bytes())?;
-        }
-    };
+    let mut output = grid.to_string();
+    println!("{}", format!("{}", output));
 
     Ok(())
 }

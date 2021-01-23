@@ -449,24 +449,24 @@ impl Grid {
 
 impl std::fmt::Display for Grid {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        let mut output = format!("+{}\n", "---+".to_string().repeat(self.width));
+        let mut output = format!("#{}\n", "##".to_string().repeat(self.width));
 
-        let mut top = "|".to_string();
-        let mut bottom = "+".to_string();
+        let mut top = "#".to_string();
+        let mut bottom = "#".to_string();
 
         for (i, cell) in self.cells.iter().enumerate() {
-            top.push_str("   ");
-            let east_boundary = if cell.contains(Cell::EAST) { " " } else { "|" };
+            top.push_str(" ");
+            let east_boundary = if cell.contains(Cell::EAST) { " " } else { "#" };
             top.push_str(east_boundary);
 
             let south_boundary = if cell.contains(Cell::SOUTH) {
-                "   "
+                " "
             } else {
-                "---"
+                "#"
             };
 
             bottom.push_str(south_boundary);
-            bottom.push_str("+");
+            bottom.push_str("#");
 
             if (i + 1) % self.width == 0 {
                 output.push_str(&top);
@@ -474,8 +474,8 @@ impl std::fmt::Display for Grid {
                 output.push_str(&bottom);
                 output.push_str("\n");
 
-                top = "|".to_string();
-                bottom = "+".to_string();
+                top = "#".to_string();
+                bottom = "#".to_string();
             }
         }
 
